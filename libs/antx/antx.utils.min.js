@@ -94,7 +94,28 @@ function sleep(numberMillis) {
 }
 
 function isDomainRecord(str) {
-    return (/^(?:\*\.)?[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/i).test(str);
+    function is(str) {
+        return (/^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])$/i).test(str);
+    }
+    if (str === "@") return true;
+    let s = str.split('.');
+    if (s[0] === '*') {
+        for (let i = 1; i < s.length; i++) {
+            if (!is(s[i]))
+                return false;
+        }
+    } else {
+        for (let i in s) {
+            if (!is(s[i]))
+                return false;
+        }
+    }
+    return true;
+}
+
+
+function isDomainName(str) {
+    return (/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/i).test(str);
 }
 
 function isARecordValue(str) {
@@ -127,4 +148,9 @@ function isCHAMERecordValue(str) {
 
 function isCSRRecordValue(str) {
     return (/^[a-zA-Z0-9+/]{43}=$/i).test(str);
+}
+
+
+function isIPv4(str) {
+    return (/^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/i).test(str);
 }
