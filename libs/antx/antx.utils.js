@@ -93,26 +93,58 @@ function sleep(numberMillis) {
     }
 }
 
+// function isDomainRecord(str) {
+//     function is(str) {
+//         return (/^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])$/i).test(str);
+//     }
+//     if (str === "@") return true;
+//     let s = str.split('.');
+//     if (s[0] === '*') {
+//         for (let i = 1; i < s.length; i++) {
+//             if (!is(s[i]))
+//                 return false;
+//         }
+//     } else {
+//         for (let i in s) {
+//             if (!is(s[i]))
+//                 return false;
+//         }
+//     }
+//     return true;
+// }
+
 function isDomainRecord(str) {
-    function is(str) {
-        return (/^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])$/i).test(str);
+    function b(str) {
+        function is(str) {
+            return (/^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])$/i).test(str);
+        }
+        if (str === "@") return true;
+        let s = str.split('.');
+        if (s[0] === '*') {
+            for (let i = 1; i < s.length; i++) {
+                if (!is(s[i]))
+                    return false;
+            }
+        } else {
+            for (let i in s) {
+                if (!is(s[i]))
+                    return false;
+            }
+        }
+        return true;
     }
-    if (str === "@") return true;
-    let s = str.split('.');
-    if (s[0] === '*') {
-        for (let i = 1; i < s.length; i++) {
-            if (!is(s[i]))
-                return false;
+
+    if (str.charAt(0) === "_") {
+        if (str.length >= 2) {
+            return b(
+                str.replace("_", '', 1));
+        } else {
+            return false;
         }
     } else {
-        for (let i in s) {
-            if (!is(s[i]))
-                return false;
-        }
+        return b(str);
     }
-    return true;
 }
-
 
 function isDomainName(str) {
     return (/[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/i).test(str);
