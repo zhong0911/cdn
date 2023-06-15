@@ -159,7 +159,7 @@ function isAAAARecordValue(str) {
 }
 
 function isTXTRecordValue(str) {
-    return (/^"[^"]*"$|^'[^']*'$|^[a-zA-Z0-9+/]{4}([a-zA-Z0-9+/]{4})*([a-zA-Z0-9+/]{2}==|[a-zA-Z0-9+/]{3}=)?$|^v=spf1 .*$|^MS=.*$/i).test(str);
+    return (/^[a-zA-Z0-9\-\._~:/\?#\[\]@!\$&'\(\)\*\+,;=%\{\}\|\\\^`\s]{1,512}$/i).test(str);
 }
 
 function isCAARecordValue(str) {
