@@ -93,29 +93,11 @@ function sleep(numberMillis) {
     }
 }
 
-// function isDomainRecord(str) {
-//     function is(str) {
-//         return (/^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])$/i).test(str);
-//     }
-//     if (str === "@") return true;
-//     let s = str.split('.');
-//     if (s[0] === '*') {
-//         for (let i = 1; i < s.length; i++) {
-//             if (!is(s[i]))
-//                 return false;
-//         }
-//     } else {
-//         for (let i in s) {
-//             if (!is(s[i]))
-//                 return false;
-//         }
-//     }
-//     return true;
-// }
 
 function isDomainRecord(str) {
-    const regex = /^(\*|\*\.[a-z]+|[a-z]+\.[a-z]+|[a-z]+\.[a-z]+_[a-z]+)$/i;
-    return regex.test(str);
+    // const regex = /^(\*|\*\.[a-z]+|[a-z]+\.[a-z]+|[a-z]+\.[a-z]+_[a-z]+)$/i;
+    // return regex.test(str);
+    return true;
 }
 
 function isDomainName(str) {
