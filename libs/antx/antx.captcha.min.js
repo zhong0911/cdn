@@ -3,23 +3,24 @@
         let id = "captcha-" + Math.floor(Math.random() * 90000 + 10000);
         config = config ?? {};
         let modalId = config['modalId'] ?? 'captcha-modal';
-        let callback = config['callback'] ?? function () {
-            $("#" + modalId).modal(hide);
-        };
+        let callback = config['callback'] ?? function () {};
         let appkey = config['appkey'] ?? 'FFFF0N0000000000B42D';
-        let scene = config['scene'] ?? 'nc_login';
+        let scene = config['scene'] ?? 'nc_other';
         let title = config['title'] ?? '请完成安全验证';
         let center = config['center'] ?? true;
+        let width = config['width'] ?? 464;
         let template = `<div class="modal fade" id="${modalId}"><div class="modal-dialog ${center ? 'modal-dialog-centered' : ''}"><div class="modal-content"><div class="modal-header">${title}<button type="button" class="btn-sm btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="${id}" class="nc-container"></div></div><div class="modal-footer"><button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><small>关闭</small></button></div></div></div></div>`;
         $("body").append(template);
-        $(`#${modalId}`).modal('show');
+        $(`#${modalId}`).modal('show').on('hidden.bs.modal', function () {
+            $(this).remove();
+        });
         let nc_token = [appkey, (new Date()).getTime(), Math.random()].join(':');
         let NC_Opt = {
             renderTo: `#${id}`,
             appkey: appkey,
             scene: scene,
             token: nc_token,
-            customWidth: 300,
+            customWidth: width,
             trans: {"key1": "code0"},
             elementID: ["usernameID"],
             is_Opt: 0,
